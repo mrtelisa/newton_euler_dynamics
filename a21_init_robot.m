@@ -1,5 +1,5 @@
 g = [0, 0, -9.81]; % gravity
-%g = [0, 0, 0];
+n_links = 3;
 
 lenght_l1 = 0.2; % m
 lenght_l2 = 0.2; % m
@@ -24,22 +24,27 @@ radius_cyl = 0.015; % m
 radius_sphere = 0.015; % m
 
 corner_base = 0.15; % m
-n_links = 3;
+
+% Inertia matrices - 3D
+I = zeros(3, 3, n_links);
+for i = 1:n_links
+    I(3,3,i) = (1/12) * mass(i) * len(i)^2;
+end
 
 %% Initial Configuration
 bRw = [ 1 0 0;
         0 0 -1;
         0 1 0];
 
+g_0 = bRw * g'; % gravity in the base frame
+
 q1_i = deg2rad(20); % rad
 q2_i = deg2rad(30); % rad
 q3_i = deg2rad(-10); % rad
-q_i = [q1_i q2_i q3_i]; % rad
 
 t = 10; % s
 %% Final Configuration
 q1_f = deg2rad(60); % rad
 q2_f = deg2rad(-15); % rad
 q3_f = deg2rad(40); % rad
-q_f = [q1_f q2_f q3_f]; % rad
 
